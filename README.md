@@ -1,0 +1,1 @@
+# loopback3-i18next
