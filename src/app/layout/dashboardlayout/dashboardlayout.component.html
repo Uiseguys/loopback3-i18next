@@ -1,0 +1,29 @@
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand">i18next Admin</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="'/dashboard/languages'">Languages</a>
+      </li>
+    </ul>
+    <div>
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{user.email}}
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" (click)="logout($event)">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="conatiner">
+  <router-outlet></router-outlet>
+</div>

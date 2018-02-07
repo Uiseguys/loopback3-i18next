@@ -1,0 +1,51 @@
+@import "bootstrap-4.0.0-beta.3/bootstrap.scss";
+@import "ng2-select.scss";
+
+.btn,
+.btn:hover,
+.btn:focus {
+  outline: 0;
+  box-shadow: none;
+}
+.form-control,
+.form-control:hover,
+.form-control:focus {
+  outline: 0;
+  box-shadow: none;
+}
+.single-page {
+  width: 100vw;
+  height: 100vh;
+  background: #355380;
+  padding-top: 150px;
+  .container {
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 3px;
+    background: white;
+    margin: auto auto;
+  }
+}
+.attachment {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  .thumbnail {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 70px;
+    height: 100px;
+    position: relative;
+    a {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+    }
+  }
+  .name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

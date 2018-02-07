@@ -1,0 +1,44 @@
+app-project-page {
+  .btn-add {
+    width: 100%;
+    display: flex;
+    background-color: #2196f3;
+    color: white;
+    text-transform: uppercase;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    line-height: 3rem;
+    cursor: pointer;
+    .fa {
+      font-size: 1.4em;
+    }
+    .icon {
+      width: 3em;
+      &:not(.right) {
+        background-color: #15419a;
+      }
+    }
+    .text {
+      flex: 1;
+    }
+    &:hover {
+      box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.26);
+      background-color: #4b8dce;
+    }
+  }
+
+  .language-detail {
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #b4b4b4;
+    padding: 1rem;
+  }
+
+  .btn-edit-language {
+    cursor: pointer;
+    &:hover {
+      color: blue;
+    }
+  }
+}

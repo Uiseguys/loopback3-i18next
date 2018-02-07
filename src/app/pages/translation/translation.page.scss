@@ -1,0 +1,58 @@
+app-translation-page {
+  .entry-item {
+    border: 0.2rem solid #f7f7f9;
+    margin-bottom: 1rem;
+    padding: 2rem 1.5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .key {
+    width: 30%;
+    font-weight: 500;
+  }
+  .value {
+    margin-left: 1rem;
+    flex: 1;
+  }
+  .action {
+    cursor: pointer;
+    position: absolute;
+    top: calc(50% - 15px);
+    right: -23px;
+    opacity: 0.7;
+    &.action-save {
+      opacity: 1;
+    }
+  }
+  .action-save .fa-save {
+    display: none;
+  }
+  .action-save:hover {
+    .fa-save {
+      display: initial;
+    }
+    .fa-exclamation-triangle {
+      display: none;
+    }
+  }
+  .btn-action-group {
+    position: absolute;
+    right: 0;
+    top: 0;
+    .btn {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      background: transparent;
+      span {
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: #333;
+        margin-bottom: 1px;
+      }
+    }
+  }
+}

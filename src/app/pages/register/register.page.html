@@ -1,0 +1,47 @@
+<div class="single-page">
+    <div class="container">
+        <h2 class="text-center">Register</h2>
+        <div class="alert alert-danger text-center" role="alert" *ngIf="registerResult === 2">
+            Sorry. Register Failed. Something is wrong
+        </div>
+        <div class="alert alert-success text-center" role="alert" *ngIf="registerResult === 1">
+            You are registered successfully. Please login by clicking
+            <a [routerLink]="'/login'">
+                here
+            </a>
+        </div>
+        <form [formGroup]="registerForm" role="form" autocomplete="off" (submit)="register($event)" *ngIf="registerResult !== 1">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter email">
+                <div class="text-danger" *ngIf="registerForm.controls['email'].hasError('required') && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
+                    Email is required
+                </div>
+                <div class="text-danger" *ngIf="!registerForm.controls['email'].hasError('required') && registerForm.controls['email'].hasError('email') && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
+                    Email is invalid
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password">
+                <div class="text-danger" *ngIf="registerForm.controls['password'].hasError('required') && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)">
+                    Password is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" placeholder="Password">
+                <div class="text-danger" *ngIf="registerForm.controls['confirmPassword'].hasError('equalTo') && (registerForm.controls['confirmPassword'].dirty || registerForm.controls['confirmPassword'].touched)">
+                    Password does Not match
+                </div>
+            </div>
+            <div class="form-group">
+                <a [routerLink]="'/login'">
+                    Login
+                </a>
+                <button type="submit" class="btn btn-primary float-right" [disabled]="!registerForm.valid">Register</button>
+            </div>
+        </form>
+    </div>
+</div>

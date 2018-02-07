@@ -1,0 +1,34 @@
+<div class="single-page">
+    <div class="container">
+        <form [formGroup]="loginForm" role="form" autocomplete="off" (submit)="login($event)">
+            <h2 class="text-center">Login</h2>
+            <div class="alert alert-danger text-center" role="alert" *ngIf="loginError">
+                Email or Password is incorrect
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter email">
+                <div class="text-danger" *ngIf="loginForm.controls['email'].hasError('required') && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">
+                    Email is required
+                </div>
+                <div class="text-danger" *ngIf="!loginForm.controls['email'].hasError('required') && loginForm.controls['email'].hasError('email') && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">
+                    Email is invalid
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password">
+                <div class="text-danger" *ngIf="loginForm.controls['password'].hasError('required') && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">
+                    Password is required
+                </div>
+            </div>
+
+            <div class="form-group clearfix">
+                <!-- <a [routerLink]="'/register'">
+                    Register
+                </a> -->
+                <button type="submit" class="btn btn-primary float-right" [disabled]="!loginForm.valid">Log In</button>
+            </div>
+        </form>
+    </div>
+</div>
