@@ -1,0 +1,61 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../node_modules/loopback-auditz",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "CustomUser": {
+    "dataSource": "mydb"
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false,
+    "relations": {
+      "user": {
+        "type": "belongsTo",
+        "model": "CustomUser",
+        "foreignKey": "userId"
+      }
+    }
+  },
+  "ACL": {
+    "dataSource": "mydb",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "mydb",
+    "public": true,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "mydb",
+    "public": true
+  },
+  "Translation": {
+    "dataSource": "mydb",
+    "public": true
+  },
+  "Project": {
+    "dataSource": "mydb",
+    "public": true
+  },
+  "Published": {
+    "dataSource": "mydb",
+    "public": true
+  },
+  "Email": {
+    "dataSource": "myEmail"
+  }
+}

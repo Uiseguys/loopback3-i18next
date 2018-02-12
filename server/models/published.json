@@ -1,0 +1,60 @@
+{
+  "name": "Published",
+  "plural": "Published",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "language": {
+      "type": "string",
+      "length": 50
+    },
+    "namespace": {
+      "type": "string",
+      "length": 100
+    },
+    "version": {
+      "type": "string",
+      "length": 50
+    },
+    "translation": {
+      "type": "string",
+      "required": true,
+      "length": 65535,
+      "mysql": {
+        "dataType": "text",
+        "dataLength": 65535
+      }
+    }
+  },
+  "relations": {
+    "project": {
+      "type": "belongsTo",
+      "model": "Project"
+    }
+  },
+  "validations": [],
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    }
+  ],
+  "mixins": {},
+  "methods": {}
+}

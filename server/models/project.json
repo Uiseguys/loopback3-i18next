@@ -1,0 +1,44 @@
+{
+  "name": "Project",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "length": 100,
+      "required": true
+    },
+    "languages": {
+      "type": "string",
+      "length": 500
+    },
+    "primaryLanguage": {
+      "type": "string",
+      "length": 20
+    }
+  },
+  "relations": {
+    "languages": {
+      "type": "hasMany",
+      "model": "Translation"
+    }
+  },
+  "validations": [],
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    }
+  ],
+  "mixins": {},
+  "methods": {}
+}

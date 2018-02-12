@@ -1,0 +1,25 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mysql": {
+    "name": "mydb",
+    "connector": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "database": "i18next",
+    "user": "root",
+    "password": ""
+  },
+  "mydb": {
+    "name": "mydb",
+    "connector": "postgresql",
+    "host": "localhost",
+    "port": 5432,
+    "database": "i18next",
+    "user": "postgres",
+    "debug": true,
+    "password": "root"
+  }
+}
