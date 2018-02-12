@@ -1,5 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# yarn.lock conflicts with package-lock.json when deployed to Heroku
+yarn.lock
+
 # compiled output
 /dist
 /dist-server
