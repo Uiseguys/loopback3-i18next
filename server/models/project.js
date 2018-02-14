@@ -4,13 +4,24 @@ const helpers = require('./helpers.js');
 
 module.exports = Project => {
   
-  helpers.disableAllMethods(Project, []);
+  Project.afterRemote('create', (ctx, instance, next) => {
+    const {models} = Project.app;
+
+    models.Translation.create({
+      language: 'en',
+      namespace: 'default',
+      description: JSON.stringify({}),
+      projectId: instance.id,
+    }, function (err, translation) {
+      next();
+    });
+  });
 
   // --- add ---
   Project.remoteMethod('addLanguage', {
     http: {path: '/:projectId/language', verb: 'post'},
     accepts: [
-      {arg: 'projectId', type: 'number'},
+      {arg: 'projectId', type: 'string'},
       {arg: 'data', type: 'object', http: {source: 'body'}},
     ],
     description: 'add language',
@@ -71,7 +82,7 @@ module.exports = Project => {
   Project.remoteMethod('addNamespace', {
     http: {path: '/:projectId/namespace', verb: 'post'},
     accepts: [
-      {arg: 'projectId', type: 'number'},
+      {arg: 'projectId', type: 'string'},
       {arg: 'data', type: 'object', http: {source: 'body'}},
     ],
     description: 'add namespace',
@@ -129,7 +140,7 @@ module.exports = Project => {
   Project.remoteMethod('publish', {
     http: {path: '/:projectId/publish', verb: 'post'},
     accepts: [
-      {arg: 'projectId', type: 'number'},
+      {arg: 'projectId', type: 'string'},
       {arg: 'data', type: 'object', http: {source: 'body'}},
     ],
     description: 'publish translation',
@@ -182,7 +193,7 @@ module.exports = Project => {
   Project.remoteMethod('versions', {
     http: {path: '/:projectId/versions', verb: 'get'},
     accepts: [
-      {arg: 'projectId', type: 'number'},
+      {arg: 'projectId', type: 'string'},
     ],
     description: 'get versions',
     returns: {type: 'object', root: true},
@@ -194,7 +205,7 @@ module.exports = Project => {
       if (err) {
         cb(err);
       } else {
-        cb(null, result.map(item => item.version));
+        cb(null,  result.map(item => item.version));
       }
     });
   };

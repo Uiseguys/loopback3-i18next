@@ -32,21 +32,6 @@ module.exports = async app => {
       name: 'editor',
       description: 'Editor',
     });
-
-    // create project
-    await app.models.Project.create([
-      {name: 'test', languages: 'en, dt', primaryLanguage: 'en'},
-    ]);
-
-    // create language
-    await app.models.Translation.create([
-      {
-        language: 'en',
-        namespace: 'default',
-        description: '{}',
-        projectId: 1,
-      },
-    ]);
   } catch (e) {
     console.log(e);
   }

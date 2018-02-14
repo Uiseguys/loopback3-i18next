@@ -6,8 +6,9 @@ module.exports = Published => {
 
   // --- publish ---
   Published.remoteMethod('getPublished', {
-    http: {path: '/:language/:namespace', verb: 'get'},
+    http: {path: '/:projectId/:language/:namespace', verb: 'get'},
     accepts: [
+      {arg: 'projectId', type: 'string'},
       {arg: 'language', type: 'string'},
       {arg: 'namespace', type: 'string'},
       {arg: 'version', type: 'string', http: {source: 'query'}},
@@ -16,18 +17,18 @@ module.exports = Published => {
     returns: {type: 'object', root: true},
   });
 
-  Published.getPublished = async (language, namespace, version, cb) => {
+  Published.getPublished = async (projectId, language, namespace, version, cb) => {
     try {
       const translations = await Published.find({
         where: {
-          projectId: 1,
+          projectId,
           language,
           namespace,
           version: version || 'Latest',
         },
       });
       if (!translations || !translations.length) {
-        cb('Not found');
+        cb(null, {});
       } else {
         cb(null, JSON.parse(translations[0].translation));
       }
