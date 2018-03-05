@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "main": "server/server.js",
   "engines": {
-    "node": ">=4"
+    "node": "8.6.0",
+    "yarn": "1.0.2"
   },
   "scripts": {
     "lint": "eslint .",
-    "start": "cross-env NODE_ENV=production && node server/server.js",
-    "dev": "cross-env NODE_ENV=development && node .",
+    "start": "cross-env NODE_ENV=production node server/server.js",
+    "dev": "cross-env NODE_ENV=development node .",
     "db": "node server/server.js autoupdate",
+    "postinstall":
+      "cross-env NODE_ENV=production node server/server.js autoupdate",
     "posttest": "npm run lint && nsp check"
   },
   "dependencies": {
