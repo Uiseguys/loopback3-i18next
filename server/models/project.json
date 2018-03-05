@@ -1,19 +1,20 @@
 {
   "name": "Project",
   "base": "PersistedModel",
-  "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
+    "id": {
+      "type": "string",
+      "defaultFn": "uuidv4",
+      "id": true,
+      "index": true
+    },
     "name": {
       "type": "string",
       "length": 100,
       "required": true
-    },
-    "languages": {
-      "type": "string",
-      "length": 500
     },
     "primaryLanguage": {
       "type": "string",
