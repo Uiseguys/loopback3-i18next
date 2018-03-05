@@ -8,11 +8,11 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "start": "cross-env NODE_ENV=production node server/server.js",
+    "start": "cross-env NODE_ENV=product node .",
     "dev": "cross-env NODE_ENV=development node .",
     "db": "node server/server.js autoupdate",
     "postinstall":
-      "cross-env NODE_ENV=production node server/server.js autoupdate",
+      "cross-env NODE_ENV=product node server/server.js autoupdate",
     "posttest": "npm run lint && nsp check"
   },
   "dependencies": {
