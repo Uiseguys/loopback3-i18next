@@ -1,8 +1,8 @@
 'use strict';
-console.log(Date.now());
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 var errorHandler = require('strong-error-handler');
+var fileUpload = require('express-fileupload');
 
 var app = (module.exports = loopback());
 
@@ -17,6 +17,7 @@ app.start = function() {
   );
 
   app.use(loopback.token());
+  app.use(fileUpload());
 
   return app.listen(function() {
     app.emit('started');

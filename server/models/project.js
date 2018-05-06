@@ -1,20 +1,23 @@
 'use strict';
-
+const async = require('async');
+const xliff2js = require('xliff/xliff12ToJs');
 const helpers = require('./helpers.js');
 
 module.exports = Project => {
-  
   Project.afterRemote('create', (ctx, instance, next) => {
     const {models} = Project.app;
 
-    models.Translation.create({
-      language: 'en',
-      namespace: 'default',
-      description: JSON.stringify({}),
-      projectId: instance.id,
-    }, function (err, translation) {
-      next();
-    });
+    models.Translation.create(
+      {
+        language: 'en',
+        namespace: 'default',
+        description: JSON.stringify({}),
+        projectId: instance.id,
+      },
+      function(err, translation) {
+        next();
+      }
+    );
   });
 
   // --- add ---
@@ -160,7 +163,7 @@ module.exports = Project => {
       const translations = await Translation.find({
         where: {
           projectId,
-        }
+        },
       });
 
       // remove old published
@@ -172,29 +175,29 @@ module.exports = Project => {
       // insert new translations
       let promises = [];
       for (let i = 0; i < translations.length; i += 1) {
-        promises.push(Published.create({
-          projectId,
-          version,
-          language: translations[i].language,
-          namespace: translations[i].namespace,
-          translation: translations[i].description,
-        }));
+        promises.push(
+          Published.create({
+            projectId,
+            version,
+            language: translations[i].language,
+            namespace: translations[i].namespace,
+            translation: translations[i].description,
+          })
+        );
       }
 
       await Promise.all(promises);
 
-      cb(null, { version });
+      cb(null, {version});
     } catch (e) {
       cb(e);
     }
   };
 
-  // --- publish ---
+  // --- version ---
   Project.remoteMethod('versions', {
     http: {path: '/:projectId/versions', verb: 'get'},
-    accepts: [
-      {arg: 'projectId', type: 'string'},
-    ],
+    accepts: [{arg: 'projectId', type: 'string'}],
     description: 'get versions',
     returns: {type: 'object', root: true},
   });
@@ -205,8 +208,75 @@ module.exports = Project => {
       if (err) {
         cb(err);
       } else {
-        cb(null,  result.map(item => item.version));
+        cb(null, result.map(item => item.version));
       }
     });
+  };
+
+  // --- import ---
+  Project.remoteMethod('import', {
+    http: {path: '/:projectId/:namespace/import', verb: 'post'},
+    accepts: [
+      {arg: 'projectId', type: 'string'},
+      {arg: 'namespace', type: 'string'},
+      {arg: 'req', type: 'object', http: {source: 'req'}},
+    ],
+    description: 'import keys from xliff',
+    returns: {type: 'object', root: true},
+  });
+
+  Project.import = (projectId, namespace, req, cb) => {
+    if (!req.files || !req.files.file) cb('File is required');
+
+    let keys = [];
+    async.waterfall(
+      [
+        cb => {
+          const {file} = req.files;
+          xliff2js(file.data.toString('utf8'), cb);
+        },
+        (res, cb) => {
+          const resource = res.resources[Object.keys(res.resources)[0]];
+          keys = Object.keys(resource).map(key => resource[key].source);
+
+          const {Translation} = Project.dataSource.models;
+          Translation.find(
+            {
+              where: {
+                projectId,
+                namespace,
+              },
+            },
+            cb
+          );
+        },
+        (translations, cb) => {
+          const promises = [];
+          for (let i = 0; i < translations.length; i += 1) {
+            const temp = JSON.parse(translations[i].description);
+
+            keys.forEach(key => {
+              if (!temp[key]) temp[key] = '';
+            });
+            promises.push(cb => {
+              translations[i].updateAttributes(
+                {
+                  description: JSON.stringify(temp),
+                },
+                cb
+              );
+            });
+          }
+          async.parallel(promises, cb);
+        },
+      ],
+      (err, res) => {
+        if (err) {
+          cb(err);
+        } else {
+          cb(null, res);
+        }
+      }
+    );
   };
 };
