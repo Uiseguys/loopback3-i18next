@@ -1,6 +1,5 @@
 'use strict';
 const async = require('async');
-const xliff2js = require('xliff/xliff12ToJs');
 const helpers = require('./helpers.js');
 
 module.exports = Project => {
@@ -221,7 +220,7 @@ module.exports = Project => {
       {arg: 'namespace', type: 'string'},
       {arg: 'req', type: 'object', http: {source: 'req'}},
     ],
-    description: 'import keys from xliff',
+    description: 'import keys from json',
     returns: {type: 'object', root: true},
   });
 
@@ -233,11 +232,8 @@ module.exports = Project => {
       [
         cb => {
           const {file} = req.files;
-          xliff2js(file.data.toString('utf8'), cb);
-        },
-        (res, cb) => {
-          const resource = res.resources[Object.keys(res.resources)[0]];
-          keys = Object.keys(resource).map(key => resource[key].source);
+          const json = JSON.parse(file.data.toString('utf8'));
+          keys = Object.keys(json);
 
           const {Translation} = Project.dataSource.models;
           Translation.find(
