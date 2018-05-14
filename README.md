@@ -144,9 +144,9 @@ We divide features like following:
     * Make directive for i18next. Please reference [this](https://github.com/Uiseguys/ng-bs-redux-boilerplate/blob/develop/src/app/shared/i18n/i18next.directive.ts).
     * Use that directive in templates like following:
 
-          	    <Trans i18nKey="[namespace]:[key]">[default value]</Trans>
-          	Example:
+          <Trans i18nKey="[namespace]:[key]">[default value]</Trans>
 
+      Example:
 
 
     	    <Trans i18nKey="common:Compact View">Compact View</Trans>
