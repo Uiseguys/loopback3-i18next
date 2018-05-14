@@ -98,3 +98,57 @@ Edit **server/config.json**
 ## How to update?
 
 Edit models and run `$ npm run db autoupdate`
+
+## How to use?
+
+We suggest you to read [this article](https://www.i18next.com/) if you are not familiar with i18next.
+We divide features like following:
+
+1.  Create
+    You should create a project to start.
+2.  Edit
+    Projects are composed of language and namespaces.
+    Project has many languages.
+    Each language has many namespaces.
+    You can add or remove keys in only default language.
+3.  Publish
+    Once project is completed, you should publish project to make it online.
+    The published url will be https://loopback3-i18next.herokuapp.com/api/Published/{projectId}/{{lng}}/{{ns}}
+    You can find projectId from the url.
+
+4.  Import namespaces
+    This project provides with feature of importing JSON file into namespace
+    The JSON file should look like following:
+
+        {
+          "application_title": "Einhorn",
+          "intro": "Diese Applikation ist ein Einhorn",
+          "parametrized_string": "I am parametrized sting with a value: {{value}} and a string: '{{str}}'",
+          "email": "email",
+          "_languages": {
+            "de": "Deutsch",
+            "en": "English"
+          },
+          "_buttons": {
+            "send": "send"
+          },
+          "Compact View": "Compact View"
+        }
+
+    You can extract extract keys automatically using [i18next scanner](https://github.com/i18next/i18next-scanner)
+    Here is how to use i18next scanner on Angular project
+
+    * Make directive for i18next. Please reference [this](https://github.com/Uiseguys/ng-bs-redux-boilerplate/blob/develop/src/app/shared/i18n/i18next.directive.ts).
+    * Use that directive in templates like following:
+
+          <Trans i18nKey="[namespace]:[key]">[default value]</Trans>
+
+      Example:
+
+
+    	    <Trans i18nKey="common:Compact View">Compact View</Trans>
+    	 Here common is namespace, and 'Compact View' is key.
+    - run i18next scanner
+
+
+    	    i18next-scanner --config i18next-scanner.config.js 'src/**/*.{html,ts}'
